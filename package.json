@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/Davi-Guindani/trico-data-mvp#readme",
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
     "dotenv": "^16.4.7",
     "next": "^15.1.6",
     "react": "^19.0.0",
