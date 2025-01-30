@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "next dev"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Davi-Guindani/trico-data-mvp.git"
