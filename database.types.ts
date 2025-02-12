@@ -58,6 +58,60 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles_roles: {
+        Row: {
+          created_at: string
+          id: string
+          profile_id: string | null
+          role_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          role_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          role_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_roles_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_roles_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roles: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
