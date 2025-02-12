@@ -17,27 +17,102 @@ INSERT INTO
     email_change,
     email_change_token_new,
     recovery_token
-  ) (
-    SELECT
-      '00000000-0000-0000-0000-000000000000',
-      uuid_generate_v4 (),
-      'authenticated',
-      'authenticated',
-      'user_' ||(ROW_NUMBER() OVER ()) || '@example.com',
-      crypt ('123456', gen_salt ('bf')),
-      CURRENT_TIMESTAMP,
-      CURRENT_TIMESTAMP,
-      CURRENT_TIMESTAMP,
-      '{"provider":"email","providers":["email"]}',
-      '{}',
-      CURRENT_TIMESTAMP,
-      CURRENT_TIMESTAMP,
-      '',
-      '',
-      '',
-      ''
-    FROM
-      generate_series(1, 3)
+  )
+VALUES
+  (
+    '00000000-0000-0000-0000-000000000000',
+    uuid_generate_v4 (),
+    'authenticated',
+    'authenticated',
+    'clinic_admin@gmail.com',
+    crypt ('123456', gen_salt ('bf')),
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '{"provider":"email","providers":["email"]}',
+    '{}',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '',
+    '',
+    '',
+    ''
+  ),
+  (
+    '00000000-0000-0000-0000-000000000000',
+    uuid_generate_v4 (),
+    'authenticated',
+    'authenticated',
+    'branch_admin@gmail.com',
+    crypt ('123456', gen_salt ('bf')),
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '{"provider":"email","providers":["email"]}',
+    '{}',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '',
+    '',
+    '',
+    ''
+  ),
+  (
+    '00000000-0000-0000-0000-000000000000',
+    uuid_generate_v4 (),
+    'authenticated',
+    'authenticated',
+    'secretary@gmail.com',
+    crypt ('123456', gen_salt ('bf')),
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '{"provider":"email","providers":["email"]}',
+    '{}',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '',
+    '',
+    '',
+    ''
+  ),
+  (
+    '00000000-0000-0000-0000-000000000000',
+    uuid_generate_v4 (),
+    'authenticated',
+    'authenticated',
+    'customer@gmail.com',
+    crypt ('123456', gen_salt ('bf')),
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '{"provider":"email","providers":["email"]}',
+    '{}',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '',
+    '',
+    '',
+    ''
+  ),
+  (
+    '00000000-0000-0000-0000-000000000000',
+    uuid_generate_v4 (),
+    'authenticated',
+    'authenticated',
+    'tricologist@gmail.com',
+    crypt ('123456', gen_salt ('bf')),
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '{"provider":"email","providers":["email"]}',
+    '{}',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    '',
+    '',
+    '',
+    ''
   );
 
 INSERT INTO
@@ -50,25 +125,187 @@ INSERT INTO
     last_sign_in_at,
     created_at,
     updated_at
-  ) (
-    SELECT
-      uuid_generate_v4 (),
-      id,
-      id,
-      format('{"sub":"%s","email":"%s"}', id :: text, email) :: jsonb,
-      'email',
-      CURRENT_TIMESTAMP,
-      CURRENT_TIMESTAMP,
-      CURRENT_TIMESTAMP
-    FROM
-      auth.users
-  );
+  )
+SELECT
+  uuid_generate_v4 (),
+  id,
+  id,
+  format('{"sub":"%s","email":"%s"}', id :: text, email) :: jsonb,
+  'email',
+  CURRENT_TIMESTAMP,
+  CURRENT_TIMESTAMP,
+  CURRENT_TIMESTAMP
+FROM
+  auth.users;
 
 INSERT INTO
   public.profiles (id, username, full_name)
-SELECT
-  id,
-  split_part(email, '@', 1) AS username,
-  split_part(email, '_', 1) || ' ' || split_part(split_part(email, '_', 2), '@', 1) AS full_name
-FROM
-  auth.users;
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        auth.users
+      WHERE
+        email = 'clinic_admin@gmail.com'
+    ),
+    'joão_silva',
+    'joão silva'
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        auth.users
+      WHERE
+        email = 'branch_admin@gmail.com'
+    ),
+    'maria_oliveira',
+    'maria oliveira'
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        auth.users
+      WHERE
+        email = 'secretary@gmail.com'
+    ),
+    'ana_costa',
+    'ana costa'
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        auth.users
+      WHERE
+        email = 'customer@gmail.com'
+    ),
+    'carlos_pereira',
+    'carlos pereira'
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        auth.users
+      WHERE
+        email = 'tricologist@gmail.com'
+    ),
+    'fernanda_almeida',
+    'fernanda almeida'
+  );
+
+INSERT INTO
+  roles (created_at, name)
+VALUES
+  (CURRENT_TIMESTAMP, 'clinic_admin'),
+  (CURRENT_TIMESTAMP, 'branch_admin'),
+  (CURRENT_TIMESTAMP, 'secretary'),
+  (CURRENT_TIMESTAMP, 'customer'),
+  (CURRENT_TIMESTAMP, 'tricologist');
+
+INSERT INTO
+  profiles_roles (created_at, profile_id, role_id)
+VALUES
+  (
+    CURRENT_TIMESTAMP,
+    (
+      SELECT
+        id
+      FROM
+        public.profiles
+      WHERE
+        username = 'joão_silva'
+    ),
+    (
+      SELECT
+        id
+      FROM
+        roles
+      WHERE
+        name = 'clinic_admin'
+    )
+  ),
+  (
+    CURRENT_TIMESTAMP,
+    (
+      SELECT
+        id
+      FROM
+        public.profiles
+      WHERE
+        username = 'maria_oliveira'
+    ),
+    (
+      SELECT
+        id
+      FROM
+        roles
+      WHERE
+        name = 'branch_admin'
+    )
+  ),
+  (
+    CURRENT_TIMESTAMP,
+    (
+      SELECT
+        id
+      FROM
+        public.profiles
+      WHERE
+        username = 'ana_costa'
+    ),
+    (
+      SELECT
+        id
+      FROM
+        roles
+      WHERE
+        name = 'secretary'
+    )
+  ),
+  (
+    CURRENT_TIMESTAMP,
+    (
+      SELECT
+        id
+      FROM
+        public.profiles
+      WHERE
+        username = 'carlos_pereira'
+    ),
+    (
+      SELECT
+        id
+      FROM
+        roles
+      WHERE
+        name = 'customer'
+    )
+  ),
+  (
+    CURRENT_TIMESTAMP,
+    (
+      SELECT
+        id
+      FROM
+        public.profiles
+      WHERE
+        username = 'fernanda_almeida'
+    ),
+    (
+      SELECT
+        id
+      FROM
+        roles
+      WHERE
+        name = 'tricologist'
+    )
+  );

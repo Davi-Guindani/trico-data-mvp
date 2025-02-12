@@ -114,7 +114,21 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      profiles_roles_view: {
+        Row: {
+          profile_id: string | null
+          roles: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_roles_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
