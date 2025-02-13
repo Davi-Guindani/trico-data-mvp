@@ -36,29 +36,47 @@ export type Database = {
     Tables: {
       clinics: {
         Row: {
-          admin_id: string
           created_at: string
           id: string
           name: string
         }
         Insert: {
-          admin_id: string
           created_at?: string
           id?: string
           name: string
         }
         Update: {
-          admin_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          clinic_id: string
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          clinic_id?: string
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          clinic_id?: string
           created_at?: string
           id?: string
           name?: string
         }
         Relationships: [
           {
-            foreignKeyName: "clinics_admin_id_fkey"
-            columns: ["admin_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
+            foreignKeyName: "products_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
             referencedColumns: ["id"]
           },
         ]
@@ -66,6 +84,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          clinic_id: string
           full_name: string | null
           id: string
           updated_at: string | null
@@ -73,6 +92,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          clinic_id: string
           full_name?: string | null
           id: string
           updated_at?: string | null
@@ -80,12 +100,21 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          clinic_id?: string
           full_name?: string | null
           id?: string
           updated_at?: string | null
           username?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles_roles: {
         Row: {
@@ -140,6 +169,35 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      services: {
+        Row: {
+          clinic_id: string
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          clinic_id?: string
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          clinic_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

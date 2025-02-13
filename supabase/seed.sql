@@ -101,7 +101,12 @@ FROM
   auth.users;
 
 INSERT INTO
-  public.profiles (id, username, full_name)
+  clinics (name)
+VALUES
+  ('clinica teste');
+
+INSERT INTO
+  public.profiles (id, username, full_name, clinic_id)
 VALUES
   (
     (
@@ -113,7 +118,15 @@ VALUES
         email = 'clinic_admin@gmail.com'
     ),
     'joão_silva',
-    'joão silva'
+    'joão silva',
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste'
+    )
   ),
   (
     (
@@ -125,7 +138,15 @@ VALUES
         email = 'secretary@gmail.com'
     ),
     'ana_costa',
-    'ana costa'
+    'ana costa',
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste'
+    )
   ),
   (
     (
@@ -137,7 +158,15 @@ VALUES
         email = 'tricologist@gmail.com'
     ),
     'fernanda_almeida',
-    'fernanda almeida'
+    'fernanda almeida',
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste'
+    )
   );
 
 INSERT INTO
@@ -205,5 +234,35 @@ VALUES
         roles
       WHERE
         name = 'tricologist'
+    )
+  );
+
+INSERT INTO
+  products (name, clinic_id)
+VALUES
+  (
+    'loção capilar',
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste'
+    )
+  );
+
+INSERT INTO
+  services (name, clinic_id)
+VALUES
+  (
+    'microagulhamento',
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste'
     )
   );
