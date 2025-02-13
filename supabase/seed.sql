@@ -282,3 +282,49 @@ VALUES
     'davi',
     'guindani'
   );
+
+INSERT INTO
+  provisions (
+    service_id,
+    tricologist_id,
+    secretary_id,
+    customer_id,
+    date
+  )
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        services
+      WHERE
+        name = 'microagulhamento'
+    ),
+    (
+      SELECT
+        profile_id
+      FROM
+        profiles_roles_view
+      WHERE
+        'tricologist' = ANY(roles)
+    ),
+    (
+      SELECT
+        profile_id
+      FROM
+        profiles_roles_view
+      WHERE
+        'secretary' = ANY(roles)
+    ),
+    (
+      SELECT
+        id
+      FROM
+        customers
+      WHERE
+        first_name = 'davi'
+        AND last_name = 'guindani'
+    ),
+    (CURRENT_TIMESTAMP + INTERVAL '1 day')
+  );

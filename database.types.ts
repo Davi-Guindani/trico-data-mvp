@@ -184,6 +184,65 @@ export type Database = {
           },
         ]
       }
+      provisions: {
+        Row: {
+          created_at: string
+          customer_id: string
+          date: string
+          id: string
+          secretary_id: string
+          service_id: string
+          tricologist_id: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id?: string
+          date: string
+          id?: string
+          secretary_id?: string
+          service_id?: string
+          tricologist_id?: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          date?: string
+          id?: string
+          secretary_id?: string
+          service_id?: string
+          tricologist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provisions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "provisions_secretary_id_fkey"
+            columns: ["secretary_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "provisions_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "provisions_tricologist_id_fkey"
+            columns: ["tricologist_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       roles: {
         Row: {
           created_at: string
