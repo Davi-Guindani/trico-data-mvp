@@ -81,25 +81,6 @@ VALUES
     uuid_generate_v4 (),
     'authenticated',
     'authenticated',
-    'customer@gmail.com',
-    crypt ('123456', gen_salt ('bf')),
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP,
-    '{"provider":"email","providers":["email"]}',
-    '{}',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP,
-    '',
-    '',
-    '',
-    ''
-  ),
-  (
-    '00000000-0000-0000-0000-000000000000',
-    uuid_generate_v4 (),
-    'authenticated',
-    'authenticated',
     'tricologist@gmail.com',
     crypt ('123456', gen_salt ('bf')),
     CURRENT_TIMESTAMP,
@@ -184,18 +165,6 @@ VALUES
       FROM
         auth.users
       WHERE
-        email = 'customer@gmail.com'
-    ),
-    'carlos_pereira',
-    'carlos pereira'
-  ),
-  (
-    (
-      SELECT
-        id
-      FROM
-        auth.users
-      WHERE
         email = 'tricologist@gmail.com'
     ),
     'fernanda_almeida',
@@ -208,7 +177,6 @@ VALUES
   (CURRENT_TIMESTAMP, 'clinic_admin'),
   (CURRENT_TIMESTAMP, 'branch_admin'),
   (CURRENT_TIMESTAMP, 'secretary'),
-  (CURRENT_TIMESTAMP, 'customer'),
   (CURRENT_TIMESTAMP, 'tricologist');
 
 INSERT INTO
@@ -269,25 +237,6 @@ VALUES
         roles
       WHERE
         name = 'secretary'
-    )
-  ),
-  (
-    CURRENT_TIMESTAMP,
-    (
-      SELECT
-        id
-      FROM
-        public.profiles
-      WHERE
-        username = 'carlos_pereira'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        roles
-      WHERE
-        name = 'customer'
     )
   ),
   (
