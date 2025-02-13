@@ -36,24 +36,34 @@ export type Database = {
     Tables: {
       branches: {
         Row: {
+          admin_id: string
           clinic_id: string
           created_at: string
           id: string
           name: string
         }
         Insert: {
+          admin_id: string
           clinic_id: string
           created_at?: string
           id?: string
           name: string
         }
         Update: {
+          admin_id?: string
           clinic_id?: string
           created_at?: string
           id?: string
           name?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "branches_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "branches_clinic_id_fkey"
             columns: ["clinic_id"]
@@ -65,21 +75,32 @@ export type Database = {
       }
       clinics: {
         Row: {
+          admin_id: string
           created_at: string
           id: string
           name: string
         }
         Insert: {
+          admin_id: string
           created_at?: string
           id?: string
           name: string
         }
         Update: {
+          admin_id?: string
           created_at?: string
           id?: string
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "clinics_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
