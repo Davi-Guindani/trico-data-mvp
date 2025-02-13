@@ -266,3 +266,19 @@ VALUES
         name = 'clinica teste'
     )
   );
+
+INSERT INTO
+  customers (clinic_id, first_name, last_name)
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste'
+    ),
+    'davi',
+    'guindani'
+  );

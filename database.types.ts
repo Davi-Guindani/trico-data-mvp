@@ -52,6 +52,38 @@ export type Database = {
         }
         Relationships: []
       }
+      customers: {
+        Row: {
+          clinic_id: string
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string
+        }
+        Insert: {
+          clinic_id?: string
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name: string
+        }
+        Update: {
+          clinic_id?: string
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customers_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           clinic_id: string
