@@ -43,25 +43,6 @@ VALUES
     uuid_generate_v4 (),
     'authenticated',
     'authenticated',
-    'branch_admin@gmail.com',
-    crypt ('123456', gen_salt ('bf')),
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP,
-    '{"provider":"email","providers":["email"]}',
-    '{}',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP,
-    '',
-    '',
-    '',
-    ''
-  ),
-  (
-    '00000000-0000-0000-0000-000000000000',
-    uuid_generate_v4 (),
-    'authenticated',
-    'authenticated',
     'secretary@gmail.com',
     crypt ('123456', gen_salt ('bf')),
     CURRENT_TIMESTAMP,
@@ -141,18 +122,6 @@ VALUES
       FROM
         auth.users
       WHERE
-        email = 'branch_admin@gmail.com'
-    ),
-    'maria_oliveira',
-    'maria oliveira'
-  ),
-  (
-    (
-      SELECT
-        id
-      FROM
-        auth.users
-      WHERE
         email = 'secretary@gmail.com'
     ),
     'ana_costa',
@@ -175,7 +144,6 @@ INSERT INTO
   roles (created_at, name)
 VALUES
   (CURRENT_TIMESTAMP, 'clinic_admin'),
-  (CURRENT_TIMESTAMP, 'branch_admin'),
   (CURRENT_TIMESTAMP, 'secretary'),
   (CURRENT_TIMESTAMP, 'tricologist');
 
@@ -199,25 +167,6 @@ VALUES
         roles
       WHERE
         name = 'clinic_admin'
-    )
-  ),
-  (
-    CURRENT_TIMESTAMP,
-    (
-      SELECT
-        id
-      FROM
-        public.profiles
-      WHERE
-        username = 'maria_oliveira'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        roles
-      WHERE
-        name = 'branch_admin'
     )
   ),
   (
