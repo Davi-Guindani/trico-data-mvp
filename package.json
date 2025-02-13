@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "supabase db reset && next dev",
+    "supabase:generate-migration": "supabase db diff -f=$npm_config_name",
+    "supabase:generate-types": "supabase gen types typescript --local > database.types.ts",
+    "supabase:update-db": "npm run supabase:generate-migration --name=$npm_config_name && npm run supabase:generate-types"
   },
   "repository": {
     "type": "git",
