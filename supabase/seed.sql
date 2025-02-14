@@ -586,7 +586,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         profile_id
@@ -604,7 +604,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         profile_id
@@ -622,7 +622,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         id
@@ -640,7 +640,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (CURRENT_TIMESTAMP + INTERVAL '1 day')
   ),
   (
@@ -660,7 +660,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         profile_id
@@ -678,7 +678,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         profile_id
@@ -696,7 +696,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         id
@@ -714,7 +714,7 @@ VALUES
             name = 'clinica teste 1'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (CURRENT_TIMESTAMP + INTERVAL '2 day')
   ),
   (
@@ -734,7 +734,7 @@ VALUES
             name = 'clinica teste 2'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         profile_id
@@ -752,7 +752,7 @@ VALUES
             name = 'clinica teste 2'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         profile_id
@@ -770,7 +770,7 @@ VALUES
             name = 'clinica teste 2'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (
       SELECT
         id
@@ -788,6 +788,6 @@ VALUES
             name = 'clinica teste 2'
         )
       LIMIT
-        1 -- Garante que apenas um valor seja retornado
+        1
     ), (CURRENT_TIMESTAMP + INTERVAL '3 day')
   );
