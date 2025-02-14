@@ -288,17 +288,16 @@ VALUES
   );
 
 INSERT INTO
-  roles (created_at, name)
+  roles (name)
 VALUES
-  (CURRENT_TIMESTAMP, 'clinic_admin'),
-  (CURRENT_TIMESTAMP, 'secretary'),
-  (CURRENT_TIMESTAMP, 'tricologist');
+  ('clinic_admin'),
+  ('secretary'),
+  ('tricologist');
 
 INSERT INTO
-  profiles_roles (created_at, profile_id, role_id)
+  profiles_roles (profile_id, role_id)
 VALUES
   (
-    CURRENT_TIMESTAMP,
     (
       SELECT
         id
@@ -317,7 +316,6 @@ VALUES
     )
   ),
   (
-    CURRENT_TIMESTAMP,
     (
       SELECT
         id
@@ -336,7 +334,6 @@ VALUES
     )
   ),
   (
-    CURRENT_TIMESTAMP,
     (
       SELECT
         id
@@ -355,7 +352,6 @@ VALUES
     )
   ),
   (
-    CURRENT_TIMESTAMP,
     (
       SELECT
         id
@@ -374,7 +370,6 @@ VALUES
     )
   ),
   (
-    CURRENT_TIMESTAMP,
     (
       SELECT
         id
@@ -393,7 +388,6 @@ VALUES
     )
   ),
   (
-    CURRENT_TIMESTAMP,
     (
       SELECT
         id
@@ -413,7 +407,7 @@ VALUES
   );
 
 INSERT INTO
-  products (name, clinic_id)
+  products (name, clinic_id, sale_price)
 VALUES
   (
     'loção capilar',
@@ -424,7 +418,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 1'
-    )
+    ),
+    59.90
   ),
   (
     'leave-in',
@@ -435,7 +430,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 1'
-    )
+    ),
+    129.90
   ),
   (
     'creme de cabelo',
@@ -446,7 +442,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 2'
-    )
+    ),
+    49.90
   ),
   (
     'condicionador',
@@ -457,11 +454,12 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 2'
-    )
+    ),
+    39.90
   );
 
 INSERT INTO
-  services (name, clinic_id)
+  services (name, clinic_id, sale_price)
 VALUES
   (
     'microagulhamento',
@@ -472,7 +470,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 1'
-    )
+    ),
+    199.90
   ),
   (
     'vacuoterapia',
@@ -483,7 +482,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 1'
-    )
+    ),
+    149.90
   ),
   (
     'microagulhamento',
@@ -494,7 +494,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 2'
-    )
+    ),
+    209.90
   ),
   (
     'massagem',
@@ -505,7 +506,8 @@ VALUES
         clinics
       WHERE
         name = 'clinica teste 2'
-    )
+    ),
+    99.90
   );
 
 INSERT INTO
@@ -585,9 +587,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         profile_id
       FROM
@@ -603,9 +604,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         profile_id
       FROM
@@ -621,9 +621,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         id
       FROM
@@ -639,9 +638,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (CURRENT_TIMESTAMP + INTERVAL '1 day')
+    ),
+    (CURRENT_TIMESTAMP + INTERVAL '1 day')
   ),
   (
     (
@@ -659,9 +657,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         profile_id
       FROM
@@ -677,9 +674,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         profile_id
       FROM
@@ -695,9 +691,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         id
       FROM
@@ -713,9 +708,8 @@ VALUES
           WHERE
             name = 'clinica teste 1'
         )
-      LIMIT
-        1
-    ), (CURRENT_TIMESTAMP + INTERVAL '2 day')
+    ),
+    (CURRENT_TIMESTAMP + INTERVAL '2 day')
   ),
   (
     (
@@ -733,9 +727,8 @@ VALUES
           WHERE
             name = 'clinica teste 2'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         profile_id
       FROM
@@ -751,9 +744,8 @@ VALUES
           WHERE
             name = 'clinica teste 2'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         profile_id
       FROM
@@ -769,9 +761,8 @@ VALUES
           WHERE
             name = 'clinica teste 2'
         )
-      LIMIT
-        1
-    ), (
+    ),
+    (
       SELECT
         id
       FROM
@@ -787,7 +778,635 @@ VALUES
           WHERE
             name = 'clinica teste 2'
         )
-      LIMIT
-        1
-    ), (CURRENT_TIMESTAMP + INTERVAL '3 day')
+    ),
+    (CURRENT_TIMESTAMP + INTERVAL '3 day')
+  );
+
+INSERT INTO
+  purchases (clinic_id, date, cost)
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 1'
+    ),
+    CURRENT_TIMESTAMP,
+    100.00
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 2'
+    ),
+    CURRENT_TIMESTAMP,
+    200.00
+  );
+
+INSERT INTO
+  purchases_products (purchase_id, product_id, quantity, unit_price)
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        purchases
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'loção capilar'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    2,
+    25.00
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        purchases
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'leave-in'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    1,
+    50
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        purchases
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'creme de cabelo'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    ),
+    5,
+    40
+  );
+
+INSERT INTO
+  sales (clinic_id, date, revenue)
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 1'
+    ),
+    CURRENT_TIMESTAMP,
+    119.80
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 2'
+    ),
+    CURRENT_TIMESTAMP,
+    99.80
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 1'
+    ),
+    CURRENT_TIMESTAMP,
+    389.7
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 2'
+    ),
+    CURRENT_TIMESTAMP,
+    159.60
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 1'
+    ),
+    CURRENT_TIMESTAMP,
+    349.80
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        clinics
+      WHERE
+        name = 'clinica teste 2'
+    ),
+    CURRENT_TIMESTAMP,
+    309.80
+  );
+
+INSERT INTO
+  sales_products (sale_id, product_id, quantity, unit_price)
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+        AND revenue = 119.80
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'loção capilar'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    2,
+    (
+      SELECT
+        sale_price
+      FROM
+        products
+      WHERE
+        name = 'loção capilar'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    )
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+        AND revenue = 99.80
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'creme de cabelo'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    ),
+    2,
+    (
+      SELECT
+        sale_price
+      FROM
+        products
+      WHERE
+        name = 'creme de cabelo'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    )
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+        AND revenue = 389.7
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'leave-in'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    3,
+    (
+      SELECT
+        sale_price
+      FROM
+        products
+      WHERE
+        name = 'leave-in'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    )
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+        AND revenue = 159.60
+    ),
+    (
+      SELECT
+        id
+      FROM
+        products
+      WHERE
+        name = 'condicionador'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    ),
+    4,
+    (
+      SELECT
+        sale_price
+      FROM
+        products
+      WHERE
+        name = 'condicionador'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    )
+  );
+
+INSERT INTO
+  sales_services (sale_id, service_id, quantity, unit_price)
+VALUES
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+        AND revenue = 349.80
+    ),
+    (
+      SELECT
+        id
+      FROM
+        services
+      WHERE
+        name = 'microagulhamento'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    1,
+    (
+      SELECT
+        sale_price
+      FROM
+        services
+      WHERE
+        name = 'microagulhamento'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    )
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+        AND revenue = 349.80
+    ),
+    (
+      SELECT
+        id
+      FROM
+        services
+      WHERE
+        name = 'vacuoterapia'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    ),
+    1,
+    (
+      SELECT
+        sale_price
+      FROM
+        services
+      WHERE
+        name = 'vacuoterapia'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 1'
+        )
+    )
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+        AND revenue = 309.80
+    ),
+    (
+      SELECT
+        id
+      FROM
+        services
+      WHERE
+        name = 'microagulhamento'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    ),
+    1,
+    (
+      SELECT
+        sale_price
+      FROM
+        services
+      WHERE
+        name = 'microagulhamento'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    )
+  ),
+  (
+    (
+      SELECT
+        id
+      FROM
+        sales
+      WHERE
+        clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+        AND revenue = 309.80
+    ),
+    (
+      SELECT
+        id
+      FROM
+        services
+      WHERE
+        name = 'massagem'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    ),
+    1,
+    (
+      SELECT
+        sale_price
+      FROM
+        services
+      WHERE
+        name = 'massagem'
+        AND clinic_id = (
+          SELECT
+            id
+          FROM
+            clinics
+          WHERE
+            name = 'clinica teste 2'
+        )
+    )
   );
