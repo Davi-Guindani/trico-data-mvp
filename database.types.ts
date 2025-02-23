@@ -36,17 +36,14 @@ export type Database = {
     Tables: {
       clinics: {
         Row: {
-          created_at: string
           id: string
           name: string
         }
         Insert: {
-          created_at?: string
           id?: string
           name: string
         }
         Update: {
-          created_at?: string
           id?: string
           name?: string
         }
@@ -55,21 +52,18 @@ export type Database = {
       customers: {
         Row: {
           clinic_id: string
-          created_at: string
           first_name: string
           id: string
           last_name: string
         }
         Insert: {
           clinic_id?: string
-          created_at?: string
           first_name: string
           id?: string
           last_name: string
         }
         Update: {
           clinic_id?: string
-          created_at?: string
           first_name?: string
           id?: string
           last_name?: string
@@ -87,21 +81,21 @@ export type Database = {
       products: {
         Row: {
           clinic_id: string
-          created_at: string
           id: string
           name: string
+          sale_price: number
         }
         Insert: {
           clinic_id?: string
-          created_at?: string
           id?: string
           name: string
+          sale_price: number
         }
         Update: {
           clinic_id?: string
-          created_at?: string
           id?: string
           name?: string
+          sale_price?: number
         }
         Relationships: [
           {
@@ -150,22 +144,19 @@ export type Database = {
       }
       profiles_roles: {
         Row: {
-          created_at: string
           id: string
-          profile_id: string | null
-          role_id: string | null
+          profile_id: string
+          role_id: string
         }
         Insert: {
-          created_at?: string
           id?: string
-          profile_id?: string | null
-          role_id?: string | null
+          profile_id: string
+          role_id: string
         }
         Update: {
-          created_at?: string
           id?: string
-          profile_id?: string | null
-          role_id?: string | null
+          profile_id?: string
+          role_id?: string
         }
         Relationships: [
           {
@@ -186,7 +177,6 @@ export type Database = {
       }
       provisions: {
         Row: {
-          created_at: string
           customer_id: string
           date: string
           id: string
@@ -195,7 +185,6 @@ export type Database = {
           tricologist_id: string
         }
         Insert: {
-          created_at?: string
           customer_id?: string
           date: string
           id?: string
@@ -204,7 +193,6 @@ export type Database = {
           tricologist_id?: string
         }
         Update: {
-          created_at?: string
           customer_id?: string
           date?: string
           id?: string
@@ -243,42 +231,214 @@ export type Database = {
           },
         ]
       }
+      purchases: {
+        Row: {
+          clinic_id: string
+          cost: number
+          date: string
+          id: string
+        }
+        Insert: {
+          clinic_id?: string
+          cost: number
+          date: string
+          id?: string
+        }
+        Update: {
+          clinic_id?: string
+          cost?: number
+          date?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchases_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchases_products: {
+        Row: {
+          id: string
+          product_id: string
+          purchase_id: string
+          quantity: number
+          unit_price: number
+        }
+        Insert: {
+          id?: string
+          product_id?: string
+          purchase_id?: string
+          quantity: number
+          unit_price: number
+        }
+        Update: {
+          id?: string
+          product_id?: string
+          purchase_id?: string
+          quantity?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchases_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchases_items_purchase_id_fkey"
+            columns: ["purchase_id"]
+            isOneToOne: false
+            referencedRelation: "purchases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       roles: {
         Row: {
-          created_at: string
           id: string
           name: string
         }
         Insert: {
-          created_at?: string
           id?: string
           name: string
         }
         Update: {
-          created_at?: string
           id?: string
           name?: string
         }
         Relationships: []
       }
-      services: {
+      sales: {
         Row: {
           clinic_id: string
-          created_at: string
+          date: string
           id: string
-          name: string
+          revenue: number
         }
         Insert: {
           clinic_id?: string
-          created_at?: string
+          date: string
           id?: string
-          name: string
+          revenue: number
         }
         Update: {
           clinic_id?: string
-          created_at?: string
+          date?: string
+          id?: string
+          revenue?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sales_products: {
+        Row: {
+          id: string
+          product_id: string
+          quantity: number
+          sale_id: string
+          unit_price: number
+        }
+        Insert: {
+          id?: string
+          product_id?: string
+          quantity: number
+          sale_id?: string
+          unit_price: number
+        }
+        Update: {
+          id?: string
+          product_id?: string
+          quantity?: number
+          sale_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_items_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "sales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sales_services: {
+        Row: {
+          id: string
+          quantity: number
+          sale_id: string
+          service_id: string
+          unit_price: number
+        }
+        Insert: {
+          id?: string
+          quantity: number
+          sale_id?: string
+          service_id?: string
+          unit_price: number
+        }
+        Update: {
+          id?: string
+          quantity?: number
+          sale_id?: string
+          service_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_services_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "sales"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          clinic_id: string
+          id: string
+          name: string
+          sale_price: number
+        }
+        Insert: {
+          clinic_id?: string
+          id?: string
+          name: string
+          sale_price: number
+        }
+        Update: {
+          clinic_id?: string
           id?: string
           name?: string
+          sale_price?: number
         }
         Relationships: [
           {
